@@ -1,9 +1,15 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
-import {Tally} from "../wailsjs/go/main/App";
+import {Tally, GetInitialCount} from "../wailsjs/go/main/App";
 
 function App() {
     const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        GetInitialCount().then(result => {
+            setCount(result);
+        });
+    }, []);
 
     function tally() {
         Tally().then(setCount)

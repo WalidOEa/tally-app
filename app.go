@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -9,8 +10,7 @@ import (
 
 // App struct
 type App struct {
-	ctx   context.Context
-	Count int
+	ctx context.Context
 }
 
 // NewApp creates a new App application struct
@@ -25,7 +25,17 @@ func (a *App) startup(ctx context.Context) {
 }
 
 func (a *App) Tally() int {
-	resp, err := (http.Get("http://localhost:5050/tally")) // 192.168.1.106
+	return a.fetchBody("/tally")
+}
+
+func (a *App) GetInitialCount() int {
+	return a.fetchBody("/curr")
+}
+
+func (a *App) fetchBody(endpoint string) int {
+	url := fmt.Sprintf("http://localhost:5050%s", endpoint) // 192.168.1.106
+
+	resp, err := (http.Get(url))
 	if err != nil {
 		return 0
 	}
