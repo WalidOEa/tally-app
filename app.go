@@ -2,6 +2,9 @@ package main
 
 import (
 	"context"
+	"io"
+	"net/http"
+	"strconv"
 )
 
 // App struct
@@ -22,6 +25,22 @@ func (a *App) startup(ctx context.Context) {
 }
 
 func (a *App) Tally() int {
-	a.Count += 1
-	return a.Count
+	resp, err := (http.Get("http://localhost:5050/tally")) // 192.168.1.106
+	if err != nil {
+		return 0
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return 0
+	}
+
+	i, err := strconv.Atoi(string(body))
+	if err != nil {
+		return 0
+	}
+
+	return i
 }
