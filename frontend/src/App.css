@@ -1,59 +1,64 @@
 #app {
-    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;   
+    justify-content: center; 
+    gap: 10px;             
     text-align: center;
+    padding: 2rem;
+    border: 1px solid rgba(175, 238, 238, 0.2);
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.2); 
 }
 
-#logo {
-    display: block;
-    width: 50%;
-    height: 50%;
-    margin: auto;
-    padding: 10% 0 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-origin: content-box;
+.btns {
+    display: flex;
+    gap: 15px;    
+    justify-content: center;
+    width: 100%;    
 }
 
-.result {
-    height: 20px;
-    line-height: 20px;
-    margin: 1.5rem auto;
-}
-
-.input-box .btn {
-    width: 60px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 3px;
+.btn {
+    background-color: var(--primary-surf);
+    color: var(--bg-dark);
+    padding: 12px 28px;
     border: none;
-    margin: 0 0 0 20px;
-    padding: 0 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 165, 173, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 120px;    
+    display: flex;     
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;  
 }
 
-.input-box .btn:hover {
-    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-    color: #333333;
+.btn:hover {
+    background-color: var(--neon-ice);
+    transform: scale(1.05); 
+    box-shadow: 0 0 20px rgba(175, 238, 238, 0.6); 
 }
 
-.input-box .input {
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    background-color: rgba(240, 240, 240, 1);
-    -webkit-font-smoothing: antialiased;
+.btn:active {
+    transform: scale(0.98);
 }
 
-.input-box .input:hover {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
-}
-
-.input-box .input:focus {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
+.count {
+    font-size: 8rem;
+    font-weight: 800; 
+    color: var(--neon-ice);
+    line-height: 1; 
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(175, 238, 238, 0.3);
+    text-align: center;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum"; 
+    min-width: 1ch; 
+    display: inline-block;
 }

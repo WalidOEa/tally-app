@@ -15,10 +15,17 @@ function App() {
         Tally().then(setCount)
     }
 
+    function reset() {
+
+    }
+
     return (
         <div id="App">
-            <div>{count}</div>
-            <button className="btn" onClick={tally}>Tally</button>
+            <div className="count">{count}</div>
+            <div className="btns">
+                <button className="btn" onClick={tally}>+1</button>
+                <button className="btn" onClick={reset}>0</button>
+            </div>
         </div>
     )
 }
