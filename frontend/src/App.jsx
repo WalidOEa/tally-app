@@ -20,12 +20,18 @@ function App() {
     }
 
     return (
-        <div id="App">
-            <div className="count">{count}</div>
-            <div className="btns">
-                <button className="btn" onClick={tally}>+1</button>
-                <button className="btn" onClick={reset}>0</button>
-            </div>
+        <div id="App" className="app-container">
+            <aside className="sidebar">
+                <div className="sidebar-header">History</div>
+            </aside>
+
+            <main className="main-content">
+                <div className="count">{count}</div>
+                <div className="btns">
+                    <button className="btn" onClick={tally}>+1</button>
+                    <button className="btn" onClick={reset}>0</button>
+                </div>
+            </main>
         </div>
     )
 }
