@@ -24,8 +24,12 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) Tally() int {
-	return a.fetchBody("/tally")
+func (a *App) Increment() int {
+	return a.fetchBody("/increment")
+}
+
+func (a *App) Decrement() int {
+	return a.fetchBody("/decrement")
 }
 
 func (a *App) GetInitialCount() int {
