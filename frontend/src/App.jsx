@@ -51,7 +51,7 @@ function App() {
                         style={{ 
                             height: '24px', 
                             width: '24px',
-                            transform: sidebarOpen ? 'rotate(0deg)' : 'rotate(180deg',
+                            transform: sidebarOpen ? 'rotate(0deg)' : 'rotate(180deg)',
                         }}
                     />
                 </button>
@@ -64,7 +64,7 @@ function App() {
                 <div className="main-toolbar">
                     <button 
                         className="limit-btn" 
-                        onClick={() => setLimitOpen(true)}
+                        onClick={() => setLimitOpen(o => !o)}
                         onMouseEnter={() => {
                             const player = gearRef.current;
                             if (player) {
@@ -81,6 +81,13 @@ function App() {
                             style={{ height: '24px', width: '24px' }}
                         />
                     </button>
+                    {limitOpen && (
+                        <div className="gear-menu">
+                            <div className="gear-menu-item">
+                                <span className="gear-menu-label">Limit</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="count">{count}</div>
                 <div className="btns">
