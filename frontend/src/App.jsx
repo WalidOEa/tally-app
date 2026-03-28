@@ -2,12 +2,15 @@ import {useEffect, useState, useRef} from 'react';
 import './App.css';
 import {Increment, Decrement, GetInitialCount} from "../wailsjs/go/main/App";
 import hamburger from './assets/animations/hamburger.json';
+import gear from './assets/animations/gear.json';
 import {Player} from '@lottiefiles/react-lottie-player';
 
 function App() {
     const [count, setCount] = useState(0);
     const [sidebarOpen, setSidebarOpen] = useState(true);
-    const playerRef = useRef(null);
+    const [limitOpen, setLimitOpen] = useState(false)
+    const hamburgerRef = useRef(null);
+    const gearRef = useRef(null);
 
     useEffect(() => {
         GetInitialCount().then(result => {
@@ -34,14 +37,14 @@ function App() {
                     className="sidebar-toggle" 
                     onClick={toggleSidebar}
                     onMouseEnter={() => {
-                        const player = playerRef.current;
+                        const player = hamburgerRef.current;
                         if (player) {
                             player.setSeeker(0);
                             player.play();
                         }
                     }}>
                     <Player
-                        ref={playerRef}
+                        ref={hamburgerRef}
                         autoplay={false}
                         loop={false}
                         src={hamburger}
@@ -58,6 +61,27 @@ function App() {
             </aside>
 
             <main className="main-content">
+                <div className="main-toolbar">
+                    <button 
+                        className="limit-btn" 
+                        onClick={() => setLimitOpen(true)}
+                        onMouseEnter={() => {
+                            const player = gearRef.current;
+                            if (player) {
+                                player.setSeeker(0);
+                                player.play();
+                            }
+                        }}   
+                    >
+                        <Player
+                            ref={gearRef}
+                            autoplay={false}
+                            loop={false}
+                            src={gear}
+                            style={{ height: '24px', width: '24px' }}
+                        />
+                    </button>
+                </div>
                 <div className="count">{count}</div>
                 <div className="btns">
                     <button className="btn" onClick={increment}>+1</button>

@@ -70,6 +70,25 @@
     gap: 20px;
 }
 
+.main-toolbar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.limit-btn {
+    background: none;
+    border: none;
+    color: var(--neon-ice);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.limit-btn:hover {
+    opacity: 1;
+}
+
 .btns {
     display: flex;
     gap: 15px;    
