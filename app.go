@@ -36,6 +36,14 @@ func (a *App) GetInitialCount() int {
 	return a.fetchBody("/curr")
 }
 
+func (a *App) GetLimit() int {
+	return 0
+}
+
+func (a *App) SetLimit() int {
+	return 0
+}
+
 func (a *App) fetchBody(endpoint string) int {
 	url := fmt.Sprintf("http://localhost:5050%s", endpoint) // 192.168.1.106
 
