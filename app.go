@@ -38,7 +38,29 @@ func (a *App) GetInitialCount() int {
 }
 
 func (a *App) GetLimit() int {
-	return 0
+	url := "http://localhost:5050/limit/curr"
+
+	resp, err := (http.Get(url))
+	if err != nil {
+		slog.Error("Error", "Failed to get limit", err)
+		return 0
+	}
+	defer resp.Body.Close()
+
+	slog.Info("Success", "Successfully get limit", resp)
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return 0
+	}
+
+	i, err := strconv.Atoi(string(body))
+	if err != nil {
+		return 0
+	}
+
+	return i
+
 }
 
 // Send limit to API
