@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"strconv"
 )
@@ -40,8 +41,18 @@ func (a *App) GetLimit() int {
 	return 0
 }
 
-func (a *App) SetLimit() int {
-	return 0
+// Send limit to API
+func (a *App) SetLimit(limit int) {
+	url := fmt.Sprintf("http://localhost:5050/limit?value=%d", limit)
+
+	resp, err := (http.Get(url))
+	if err != nil {
+		slog.Error("Error", "Failed to set limit", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	slog.Info("Success", "Successfully set limit", resp)
 }
 
 func (a *App) fetchBody(endpoint string) int {
