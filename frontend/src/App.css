@@ -15,6 +15,35 @@
     display: flex;
     width: 100vw;
     height: 100vh;
+    transition: background-color 0.6s ease;
+}
+
+.limit-exceeded .sidebar {
+    background-color: #321325;
+    border-right-color: rgba(95, 15, 64, 0.5);
+    transition: background-color 0.6s ease;
+}
+
+.limit-exceeded .main-content {
+    background-color: #5F0F40;
+    transition: background-color 0.6s ease;
+}
+
+.limit-exceeded .count {
+    color: #9A031E;
+    text-shadow: 0 0 20px rgba(154, 3, 30, 0.5);
+    transition: color 0.6s ease, text-shadow 0.6s ease;
+}
+
+.limit-exceeded .btn {
+    background-color: #9A031E;
+    box-shadow: 0 4px 14px rgba(154, 3, 30, 0.4);
+    transition: background-color 0.6s ease;
+}
+
+.limit-exceeded .btn:hover {
+    background-color: #ff4444;
+    box-shadow: 0 0 20px rgba(154, 3, 30, 0.6);
 }
 
 .sidebar {

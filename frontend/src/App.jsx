@@ -52,7 +52,7 @@ function App() {
     }
 
     return (
-        <div id="App" className="app-container">
+        <div id="App" className={`app-container ${limit != null && count > limit ? 'limit-exceeded' : ''}`}>
             <aside className={`sidebar ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
                 <button
                     className="sidebar-toggle"
@@ -149,9 +149,7 @@ function App() {
                     </div>
                 )}
 
-                <div className="count" style={{
-                    color: limit !== null && count >= limit ? '#ff6b6b' : 'var(--neon-ice)'
-                }}>
+                <div className="count">
                     {count}
                 </div>
                 <div className="btns">
