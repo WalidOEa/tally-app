@@ -25,42 +25,44 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+// Increment tally
 func (a *App) Increment() int {
 	return a.fetchBody("/increment")
 }
 
+// Decrement tally
 func (a *App) Decrement() int {
 	return a.fetchBody("/decrement")
 }
 
+// Fetch initial tally during wakeup
 func (a *App) GetInitialCount() int {
 	return a.fetchBody("/curr")
 }
 
+// Get current limit as held by db
 func (a *App) GetLimit() int {
 	url := "http://localhost:5050/limit/curr"
 
 	resp, err := (http.Get(url))
 	if err != nil {
-		slog.Error("Error", "Failed to get limit", err)
-		return 0
+		slog.Error("Error in fetching limit from API", "error", err)
 	}
-	defer resp.Body.Close()
 
-	slog.Info("Success", "Successfully get limit", resp)
+	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return 0
+		slog.Error("Error in reading response body", "error", err)
 	}
 
 	i, err := strconv.Atoi(string(body))
 	if err != nil {
-		return 0
+		slog.Error("Error in casting string to int", "error", err)
 	}
 
+	slog.Info("Returning int cast response body", "i", i)
 	return i
-
 }
 
 // Send limit to API
@@ -69,33 +71,35 @@ func (a *App) SetLimit(limit int) {
 
 	resp, err := (http.Get(url))
 	if err != nil {
-		slog.Error("Error", "Failed to set limit", err)
-		return
+		slog.Error("Error in sending limit to API", "error", err)
 	}
+
 	defer resp.Body.Close()
 
-	slog.Info("Success", "Successfully set limit", resp)
+	slog.Info("Successfully sent limit to API")
 }
 
+// Fetch response body from specified IP
 func (a *App) fetchBody(endpoint string) int {
 	url := fmt.Sprintf("http://localhost:5050%s", endpoint) // 192.168.1.106
 
 	resp, err := (http.Get(url))
 	if err != nil {
-		return 0
+		slog.Error("Error in fetching response", "error", err)
 	}
 
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return 0
+		slog.Error("Error in reading response body", "error", err)
 	}
 
 	i, err := strconv.Atoi(string(body))
 	if err != nil {
-		return 0
+		slog.Error("Error in casting string to int", "error", err)
 	}
 
+	slog.Info("Returning int cast response body", "i", i)
 	return i
 }
