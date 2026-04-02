@@ -9,4 +9,6 @@ export function GetLimit():Promise<number>;
 
 export function Increment():Promise<number>;
 
-export function SetLimit(arg1:number):Promise<void>;
+export function InitialPing():Promise<boolean>;
+
+export function SetLimit(arg1:number):Promise<number>;

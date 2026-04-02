@@ -18,6 +18,10 @@ export function Increment() {
   return window['go']['main']['App']['Increment']();
 }
 
+export function InitialPing() {
+  return window['go']['main']['App']['InitialPing']();
+}
+
 export function SetLimit(arg1) {
   return window['go']['main']['App']['SetLimit'](arg1);
 }

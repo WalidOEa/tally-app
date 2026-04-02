@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import './App.css';
-import {Increment, Decrement, GetInitialCount, SetLimit, GetLimit} from "../wailsjs/go/main/App";
+import {Increment, Decrement, GetInitialCount, SetLimit, GetLimit, InitialPing} from "../wailsjs/go/main/App";
 import hamburger from './assets/animations/hamburger.json';
 import gear from './assets/animations/gear.json';
 import {Player} from '@lottiefiles/react-lottie-player';
@@ -14,20 +14,38 @@ function App() {
     const [limitInput, setLimitInput] = useState('');
     const hamburgerRef = useRef(null);
     const gearRef = useRef(null);
+    const [toast, setToast] = useState(null);
 
     useEffect(() => {
-        GetInitialCount().then(setCount);
-        GetLimit().then(result => {
-            if (result) setLimit(result);
+        InitialPing().then(reachable => {
+            if (!reachable) {
+                showError("Could not connect to server. Please ensure it is running and try again")
+                return;
+            }
+            GetInitialCount().then(setCount);
+            GetLimit().then(result => {
+                if (result) setLimit(result);
+            });
         });
     }, []);
 
+    function showError(message) {
+        setToast(message);
+        setTimeout(() => setToast(null), 10000);
+    }
+
     function increment() {
-        Increment().then(setCount);
+        Increment().then(result => {
+            if (result === -1) return showError("Could not increment at this time");
+            setCount(result)  
+        });
     }
 
     function decrement() {
-        Decrement().then(setCount);
+        Decrement().then(result => {
+            if (result === -1) return showError("Could not decrement at this time");
+            setCount(result);
+        });
     }
 
     function toggleSidebar() {
@@ -53,6 +71,13 @@ function App() {
 
     return (
         <div id="App" className={`app-container ${limit != null && count > limit ? 'limit-exceeded' : ''}`}>
+            {toast && (
+                <div className="toast">
+                    <span>{toast}</span>
+                    <button className="toast-close" onClick={() => setToast(null)}>✕</button>
+                </div>
+            )}
+            
             <aside className={`sidebar ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
                 <button
                     className="sidebar-toggle"
