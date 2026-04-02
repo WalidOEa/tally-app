@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import './App.css';
-import {Increment, Decrement, GetInitialCount, SetLimit, GetLimit, InitialPing} from "../wailsjs/go/main/App";
+import {Increment, Decrement, GetInitialCount, SetLimit, GetLimit, Ping} from "../wailsjs/go/main/App";
 import hamburger from './assets/animations/hamburger.json';
 import gear from './assets/animations/gear.json';
 import {Player} from '@lottiefiles/react-lottie-player';
@@ -17,7 +17,7 @@ function App() {
     const [toast, setToast] = useState(null);
 
     useEffect(() => {
-        InitialPing().then(reachable => {
+        Ping().then(reachable => {
             if (!reachable) {
                 showError("Could not connect to server. Please ensure it is running and try again")
                 return;

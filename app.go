@@ -26,11 +26,11 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) InitialPing() bool {
-	return a.initialPing()
+func (a *App) Ping() bool {
+	return a.ping()
 }
 
-func (a *App) initialPing() bool {
+func (a *App) ping() bool {
 	maxRetries := 5
 	delay := time.Second
 
@@ -42,6 +42,7 @@ func (a *App) initialPing() bool {
 			resp.Body.Close()
 			latency := time.Since(start)
 
+			slog.Info("Ping")
 			slog.Info("Server reachable", "latency", latency)
 
 			return true

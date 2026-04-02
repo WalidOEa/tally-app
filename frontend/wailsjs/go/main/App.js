@@ -18,8 +18,8 @@ export function Increment() {
   return window['go']['main']['App']['Increment']();
 }
 
-export function InitialPing() {
-  return window['go']['main']['App']['InitialPing']();
+export function Ping() {
+  return window['go']['main']['App']['Ping']();
 }
 
 export function SetLimit(arg1) {
