@@ -24,6 +24,7 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+	go a.keepAlive(ctx)
 }
 
 func (a *App) Ping() bool {
@@ -42,8 +43,7 @@ func (a *App) ping() bool {
 			resp.Body.Close()
 			latency := time.Since(start)
 
-			slog.Info("Ping")
-			slog.Info("Server reachable", "latency", latency)
+			slog.Info("Ping", "latency", latency)
 
 			return true
 		}
@@ -56,6 +56,32 @@ func (a *App) ping() bool {
 
 	slog.Error("Server unreachable after maximum retires", "retries", maxRetries)
 	return false
+}
+
+func (a *App) keepAlive(ctx context.Context) {
+	ticker := time.NewTicker(1 * time.Minute)
+	defer ticker.Stop()
+
+	for {
+		start := time.Now()
+
+		select {
+		case <-ticker.C:
+			resp, err := http.Get("http://localhost:5050/ping")
+			if err != nil {
+				slog.Warn("Ping failed", "error", err)
+
+			} else {
+				latency := time.Since(start)
+				resp.Body.Close()
+
+				slog.Info("Ping", "latency", latency)
+			}
+		case <-ctx.Done():
+			slog.Info("Keep-alive stopped")
+			return
+		}
+	}
 }
 
 // Increment tally
